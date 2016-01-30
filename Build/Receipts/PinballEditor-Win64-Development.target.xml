@@ -15,5 +15,6 @@
     <BuildProduct Path="$(ProjectDir)\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-PinballEditor.lib" Type="ImportLibrary" />
   </BuildProducts>
   <RuntimeDependencies />
+  <AdditionalProperties />
   <bRequireDependenciesToExist>true</bRequireDependenciesToExist>
 </BuildReceipt>
