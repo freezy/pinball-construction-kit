@@ -29,4 +29,4 @@ source their efforts.
 
 ## License
 
-TBD
+MIT
