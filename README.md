@@ -18,13 +18,13 @@ work that has been done so far. Feel free to fork and create PRs.
 ## Usage
 
 1. [Install Unreal Engine 4](https://docs.unrealengine.com/latest/INT/GettingStarted/Installation/index.html)
-2. Download and install [Visual Studio 2015](https://www.microsoft.com/en-us/download/details.aspx?id=48146)
+2. Download and install [Visual Studio 2017](https://visualstudio.microsoft.com/downloads/)
 3. Open project and play!
 
 ## Credits
 
-For now, credits go entirely to Epic Games Japan who were kind enough to open
-source their efforts.
+- To Epic Games Japan who were kind enough to open source their efforts.
+- To @ryugibo for keeping the engine updated
 
 
 ## License
