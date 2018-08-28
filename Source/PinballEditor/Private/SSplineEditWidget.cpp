@@ -3,8 +3,7 @@
 #include "PinballEditor.h"
 #include "SSplineEditWidget.h"
 #include "SplineActor.h"
-//#include "Components/SplineComponent.h"
-#include "PinballSplineComponent.h"
+#include "Components/SplineComponent.h"
 #include "MessageLog.h"
 #include "ScopedTransaction.h"
 
@@ -68,12 +67,12 @@ void SSplineEditWidget::Construct( const FArguments& InArgs )
 	// Dummy brush
 	BackgroundImage = FEditorStyle::GetBrush("ProgressBar.ThinBackground");
 
-	FString SplinePointImagePath = FPaths::GameContentDir() / TEXT("Editor/Slate/Icons/SplinePoint_Normal.png");
+	FString SplinePointImagePath = FPaths::ProjectContentDir() / TEXT("Editor/Slate/Icons/SplinePoint_Normal.png");
 	FName SplinePointBrushName = FName(*SplinePointImagePath);
 	SplinePointImageBrushPtr = MakeShareable(new FSlateDynamicImageBrush(SplinePointBrushName, SSplineEditWidgetDefs::PointSize));
 	SplinePointImageBrush = SplinePointImageBrushPtr.Get();
 
-	FString HoveredSplinePointImagePath = FPaths::GameContentDir() / TEXT("Editor/Slate/Icons/SplinePoint_Hover.png");
+	FString HoveredSplinePointImagePath = FPaths::ProjectContentDir() / TEXT("Editor/Slate/Icons/SplinePoint_Hover.png");
 	FName HoveredSplinePointBrushName = FName(*HoveredSplinePointImagePath);
 	HoveredSplinePointImageBrushPtr = MakeShareable(new FSlateDynamicImageBrush(HoveredSplinePointBrushName, SSplineEditWidgetDefs::PointSize));
 	HoveredSplinePointImageBrush = HoveredSplinePointImageBrushPtr.Get();
@@ -481,6 +480,8 @@ void SSplineEditWidget::OnPropertyChanged(UObject* ObjectBeingModified, FPropert
 
 int32 SSplineEditWidget::OnPaint( const FPaintArgs& Args, const FGeometry& AllottedGeometry, const FSlateRect& WidgetClippingRect, FSlateWindowElementList& OutDrawElements, int32 LayerId, const FWidgetStyle& InWidgetStyle, bool bParentEnabled ) const
 {
+	OutDrawElements.PushClip(FSlateClippingZone(AllottedGeometry));
+
 	// Draw background border layer
 	{
 		const FSlateBrush* ThisBackgroundImage = BackgroundImage.Get();
@@ -489,7 +490,6 @@ int32 SSplineEditWidget::OnPaint( const FPaintArgs& Args, const FGeometry& Allot
 			LayerId,
 			AllottedGeometry.ToPaintGeometry(),
 			ThisBackgroundImage,
-			WidgetClippingRect,
 			ESlateDrawEffect::None,
 			InWidgetStyle.GetColorAndOpacityTint() * ThisBackgroundImage->TintColor.GetColor( InWidgetStyle )
 			);
@@ -550,7 +550,6 @@ int32 SSplineEditWidget::OnPaint( const FPaintArgs& Args, const FGeometry& Allot
 				SplineStartDir,
 				SplineEnd,
 				SplineEndDir,
-				WidgetClippingRect,
 				SplineThickness,
 				ESlateDrawEffect::None,
 				InWidgetStyle.GetColorAndOpacityTint() * FColor::White * SplineColorScale);
@@ -578,10 +577,6 @@ int32 SSplineEditWidget::OnPaint( const FPaintArgs& Args, const FGeometry& Allot
 		const FSplinePoint2D* CurrentSplinePoint = &SplinePoints[SplinePointIndex];
 		const bool bIsMouseOverPoint = (SplinePointUnderMouse != NULL && SplinePointUnderMouse == CurrentSplinePoint) || (PointBeingDragged != nullptr && PointBeingDragged == CurrentSplinePoint);
 
-		// Draw the spline point
-		FSlateRect SplinePointClippingRect = TransformRect(AllottedGeometry.GetAccumulatedLayoutTransform(), FSlateRect(CurrentSplinePoint->Position, CurrentSplinePoint->Position + SSplineEditWidgetDefs::PointSize));
-		// Intersect the spline point's clipping rectangle with our widget clipping rectangle to ensure the spline point is not draw outside the bounds of the widget
-		SplinePointClippingRect = SplinePointClippingRect.IntersectionWith(WidgetClippingRect);
 		const auto SplinePointPaintGeometry = AllottedGeometry.ToPaintGeometry(CurrentSplinePoint->Position, SSplineEditWidgetDefs::PointSize);
 
 		/** Different blend color for spline points that are currently selected */
@@ -592,11 +587,11 @@ int32 SSplineEditWidget::OnPaint( const FPaintArgs& Args, const FGeometry& Allot
 			LayerId,
 			SplinePointPaintGeometry,
 			bIsMouseOverPoint ? HoveredSplinePointImageBrush.Get() : SplinePointImageBrush.Get(),
-			SplinePointClippingRect,
 			ESlateDrawEffect::None,
 			DrawColor
 			);
 	}
+	OutDrawElements.PopClip();
 
 	return LayerId;
 }
@@ -899,7 +894,7 @@ FReply SSplineEditWidget::OnMouseButtonUp( const FGeometry& InMyGeometry, const 
 				SplinePointUnderMouse = DroppedPoint;
 
 				UClass* ActorClass = ASplineActor::StaticClass();
-				UProperty* SplineInfoProperty = FindField<UProperty>(USplineComponent::StaticClass(), GET_MEMBER_NAME_CHECKED(USplineComponent, SplineInfo));
+				UProperty* SplineInfoProperty = FindField<UProperty>(USplineComponent::StaticClass(), GET_MEMBER_NAME_CHECKED(USplineComponent, SplineCurves));
 				SplineActor->SplineComponent->bSplineHasBeenEdited = true;
 
 				// Notify that the spline has been modified
@@ -1260,10 +1255,6 @@ void SSplineEditWidget::ShowOptionsMenuAt(const FVector2D& ScreenSpacePosition, 
 				return;
 			}
 
-			FSplinePoint2D& PointToEdit = Self->SplinePoints[MatchingIndex];
-			UClass* ActorClass = ASplineActor::StaticClass();
-			UProperty* SplineInfoProperty = FindField<UProperty>(USplineComponent::StaticClass(), GET_MEMBER_NAME_CHECKED(USplineComponent, SplineInfo));
-
 			// Scoped transaction for the undo buffer
 			const FScopedTransaction Transaction(LOCTEXT("DeleteSplinePoint", "Delete Spline Point"));
 
@@ -1274,7 +1265,7 @@ void SSplineEditWidget::ShowOptionsMenuAt(const FVector2D& ScreenSpacePosition, 
 			}
 
 			// Delete the spline point
-			Self->SplineActor->SplineComponent->PinballRemoveSplinePoint(MatchingIndex);
+			Self->SplineActor->SplineComponent->RemoveSplinePoint(MatchingIndex);
 			Self->SplineActor->SplineComponent->bSplineHasBeenEdited = true;
 
 			// Don't call PostEditChangeProperty here because it ends up forcing the spline edit widget to recalculate zoom & offset, so it makes you lose your place if you have zoomed or panned
@@ -1322,9 +1313,6 @@ void SSplineEditWidget::ShowOptionsMenuAt(const FVector2D& ScreenSpacePosition, 
 			// Scoped transaction for the undo buffer
 			const FScopedTransaction Transaction(LOCTEXT("InsertSplinePoint", "Insert Spline Point"));
 
-			UClass* ActorClass = ASplineActor::StaticClass();
-			UProperty* SplineInfoProperty = FindField<UProperty>(USplineComponent::StaticClass(), GET_MEMBER_NAME_CHECKED(USplineComponent, SplineInfo));
-
 			Self->SplineActor->SplineComponent->Modify();
 			if (AActor* Owner = Self->SplineActor->SplineComponent->GetOwner())
 			{
@@ -1337,7 +1325,7 @@ void SSplineEditWidget::ShowOptionsMenuAt(const FVector2D& ScreenSpacePosition, 
 			if (IndexToInsert < Self->SplineActor->SplineComponent->GetNumberOfSplinePoints())
 			{
 				
-				Self->SplineActor->SplineComponent->PinballAddSplinePointAtIndex(NewSplinePointLocation3D, IndexToInsert, ESplineCoordinateSpace::Local);
+				Self->SplineActor->SplineComponent->AddSplinePointAtIndex(NewSplinePointLocation3D, IndexToInsert, ESplineCoordinateSpace::Local);
 			}
 			else
 			{
