@@ -5,7 +5,7 @@
 #include "GameFramework/Actor.h"
 #include "SplineActor.generated.h"
 
-class UPinballSplineComponent;
+class USplineComponent;
 class USplineMeshComponent;
 
 UCLASS(BlueprintType, Blueprintable)
@@ -24,7 +24,7 @@ public:
 	
 	/** Spline that represents our shape */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Spline)
-	UPinballSplineComponent* SplineComponent;
+	USplineComponent* SplineComponent;
 	
 	/** Duplicates the logic from AActor::AddComponent() because that cannot be called from a BP Macro Library or BP Function Library */
 	UFUNCTION(BlueprintCallable, Category = Spline)

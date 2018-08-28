@@ -4,28 +4,29 @@ using UnrealBuildTool;
 
 public class PinballEditor : ModuleRules
 {
-    public PinballEditor(TargetInfo Target)
+	public PinballEditor(ReadOnlyTargetRules Target)
+		: base(Target)
 	{
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "UnrealEd", "InputCore"});
-        PrivateDependencyModuleNames.AddRange(new string[] 
-        { 
-            "PropertyEditor",
-            "Pinball",
-            "RenderCore",
+		PrivateDependencyModuleNames.AddRange(new string[] 
+		{ 
+			"PropertyEditor",
+			"Pinball",
+			"RenderCore",
 			"Slate",
 			"SlateCore",
-            "EditorStyle"
-        }
-        );
+			"EditorStyle"
+		}
+		);
 
-        PrivateIncludePathModuleNames.AddRange(new string[] 
-        { 
-            "PropertyEditor",
-            "Pinball",
-            "RenderCore",
+		PrivateIncludePathModuleNames.AddRange(new string[] 
+		{ 
+			"PropertyEditor",
+			"Pinball",
+			"RenderCore",
 			"Slate",
 			"SlateCore",
-        }
-        );
+		}
+		);
 	}
 }

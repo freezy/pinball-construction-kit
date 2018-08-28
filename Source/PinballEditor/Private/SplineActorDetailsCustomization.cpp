@@ -15,7 +15,6 @@
 #include "PropertyCustomizationHelpers.h"
 #include "SplineActor.h"
 #include "Components/SplineComponent.h"
-#include "PinballSplineComponent.h"
 #include "ScopedTransaction.h"
 #include "SNumericEntryBox.h"
 
@@ -31,7 +30,7 @@ TSharedRef<IDetailCustomization> FSplineActorDetailsCustomization::MakeInstance(
 
 void FSplineActorDetailsCustomization::CustomizeDetails(IDetailLayoutBuilder& DetailLayout)
 {
-	const TArray< TWeakObjectPtr<UObject> >& SelectedObjects = DetailLayout.GetDetailsView().GetSelectedObjects();
+	const TArray< TWeakObjectPtr<UObject> >& SelectedObjects = DetailLayout.GetDetailsView()->GetSelectedObjects();
 	if (SelectedObjects.Num() > 1)
 	{
 		//Can only handle single selection
@@ -296,7 +295,7 @@ FReply FSplineActorDetailsCustomization::InvertSpline(ASplineActor* SplineActor,
 		}
 
 		// Clear all the spline points temporarily
-		SplineActor->SplineComponent->ClearSplinePoints();
+		SplineActor->SplineComponent->ClearSplinePoints(false);
 
 		// Add the spline points back in the reverse order (necessary so the triangles are calculated in the right order to display the cap mesh on the top facing upwards)
 		for (int32 SplinePointIndex = 0; SplinePointIndex < SplinePointLocations.Num(); ++SplinePointIndex)

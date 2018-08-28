@@ -3,6 +3,8 @@
 #pragma once
 
 #include "PropertyEditorModule.h"
+#include "IDetailCustomization.h"
+
 class SSplineEditWidget;
 class ASplineActor;
 

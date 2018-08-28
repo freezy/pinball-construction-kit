@@ -2,7 +2,7 @@
 
 #include "Pinball.h"
 #include "SplineActor.h"
-#include "PinballSplineComponent.h"
+#include "Components/SplineComponent.h"
 #include "Components/SplineMeshComponent.h"
 #include "Engine/CullDistanceVolume.h"
 
@@ -12,12 +12,12 @@ ASplineActor::ASplineActor(const FObjectInitializer& ObjectInitializer)
 {
 	SetFlags(RF_Transactional);
 
-	SplineComponent = ObjectInitializer.CreateDefaultSubobject < UPinballSplineComponent >(this, TEXT("SplineComp"));
+	SplineComponent = ObjectInitializer.CreateDefaultSubobject < USplineComponent >(this, TEXT("SplineComp"));
 	//static ConstructorHelpers::FObjectFinder<UStaticMesh> StaticMeshOb(TEXT("/Game/Meshes/TemplateCube_Rounded.TemplateCube_Rounded"));
 	USceneComponent* SceneComponent = ObjectInitializer.CreateDefaultSubobject < USceneComponent >(this, TEXT("SceneComp"));
 	RootComponent = SceneComponent;
 
-	SplineComponent->AttachTo(SceneComponent);
+	SplineComponent->AttachToComponent(SceneComponent, FAttachmentTransformRules::KeepRelativeTransform);
 
 	SplineComponent->AddSplinePoint(FVector(100, 100, 0), ESplineCoordinateSpace::Local);
 	SplineComponent->AddSplinePoint(FVector(0, 100, 0), ESplineCoordinateSpace::Local);
@@ -72,7 +72,7 @@ USplineMeshComponent* ASplineActor::AddPinballSplineMeshComponent(bool bManualAt
 					}
 					else
 					{
-						NewSceneComp->AttachTo(RootComponent);
+						NewSceneComp->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 					}
 				}
 	
@@ -85,7 +85,7 @@ USplineMeshComponent* ASplineActor::AddPinballSplineMeshComponent(bool bManualAt
 			NewActorComp->RegisterComponent();
 	
 			UWorld* World = GetWorld();
-			if (!bRunningUserConstructionScript && World && bIsSceneComponent)
+			if (!IsRunningUserConstructionScript() && World && bIsSceneComponent)
 			{
 				UPrimitiveComponent* NewPrimitiveComponent = Cast<UPrimitiveComponent>(NewActorComp);
 				if (NewPrimitiveComponent /*&& ACullDistanceVolume::CanBeAffectedByVolumes(NewPrimitiveComponent)*/)
