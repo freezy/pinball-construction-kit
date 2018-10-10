@@ -7,6 +7,8 @@ public class PinballEditor : ModuleRules
 	public PinballEditor(ReadOnlyTargetRules Target)
 		: base(Target)
 	{
+		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "UnrealEd", "InputCore"});
 		PrivateDependencyModuleNames.AddRange(new string[] 
 		{ 

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "PropertyEditorModule.h"
+#include "CoreMinimal.h"
 #include "IDetailCustomization.h"
 
 class SSplineEditWidget;

@@ -1,6 +1,5 @@
 // Copyright 1998-2015 Epic Games, Inc. All Rights Reserved.
 
-#include "Pinball.h"
 #include "WallActor.h"
 
 AWallActor::AWallActor(const FObjectInitializer& ObjectInitializer)
@@ -12,7 +11,7 @@ AWallActor::AWallActor(const FObjectInitializer& ObjectInitializer)
 // Sets default values
 AWallActor::AWallActor()
 {
- 	// turned this off to improve performance 
+	// turned this off to improve performance 
 	PrimaryActorTick.bCanEverTick = false;
 }
 

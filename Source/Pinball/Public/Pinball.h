@@ -1,8 +1,5 @@
 // Copyright 1998-2014 Epic Games, Inc. All Rights Reserved.
 
-#ifndef __PINBALL_H__
-#define __PINBALL_H__
+#pragma once
 
-#include "EngineMinimal.h"
-				   
-#endif
+#include "CoreMinimal.h"

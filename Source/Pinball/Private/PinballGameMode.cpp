@@ -1,6 +1,5 @@
 // Copyright 1998-2014 Epic Games, Inc. All Rights Reserved.
 
-#include "Pinball.h"
 #include "PinballGameMode.h"
 #include "PinballBall.h"
 

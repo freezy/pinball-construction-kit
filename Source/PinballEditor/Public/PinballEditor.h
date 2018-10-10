@@ -2,13 +2,10 @@
 
 #pragma once
 
-#include "EngineMinimal.h"
-#include "UnrealEd.h"
+#include "CoreMinimal.h"
 
 class IPinballEditorModule : public IModuleInterface
 {
 public:
 
 };
-
-				   
