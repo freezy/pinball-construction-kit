@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "CoreMinimal.h"
 #include "SplineActor.h"
 #include "RampActor.generated.h"
 

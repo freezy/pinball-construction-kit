@@ -1,11 +1,11 @@
 // Copyright 1998-2013 Epic Games, Inc. All Rights Reserved.
 
-#include "PinballEditor.h"
 #include "SSplineEditWidget.h"
 #include "SplineActor.h"
 #include "Components/SplineComponent.h"
 #include "MessageLog.h"
 #include "ScopedTransaction.h"
+#include "EditorStyleSettings.h"
 
 
 #define LOCTEXT_NAMESPACE "SSplineEditWidget"

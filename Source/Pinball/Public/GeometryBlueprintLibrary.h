@@ -1,11 +1,10 @@
 // Copyright 1998-2015 Epic Games, Inc. All Rights Reserved.
 
 #pragma once
-// D:\P4\UE4\Engine\Source\Runtime\Engine\Classes\Kismet\BlueprintFunctionLibrary.h
+
+#include "CoreMinimal.h"
 #include "Runtime/Engine/Classes/Kismet/BlueprintFunctionLibrary.h"
 #include "GeometryBlueprintLibrary.generated.h"
-
-
 
 /**
  * Sa

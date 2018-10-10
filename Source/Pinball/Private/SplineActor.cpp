@@ -1,6 +1,5 @@
 // Copyright 1998-2015 Epic Games, Inc. All Rights Reserved.
 
-#include "Pinball.h"
 #include "SplineActor.h"
 #include "Components/SplineComponent.h"
 #include "Components/SplineMeshComponent.h"
@@ -35,7 +34,7 @@ ASplineActor::ASplineActor(const FObjectInitializer& ObjectInitializer)
 ASplineActor::ASplineActor()
 	: bUpdateSplineMeshes(true)
 {
- 	// turned this off to improve performance
+	// turned this off to improve performance
 	PrimaryActorTick.bCanEverTick = false;
 }
 
