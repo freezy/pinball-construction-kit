@@ -1,0 +1,23 @@
+# EditorConfig is awesome:http://EditorConfig.org
+
+root = true
+  
+[*]
+charset = utf-8
+indent_style = tab
+indent_size = 4
+insert_final_newline = true
+
+# MSBuild
+[*.{csproj,proj,projitems,shproj,fsproj,target,props}]
+indent_style = space
+indent_size = 2
+
+# XML config files
+[*.{config,nuspec,resx}]
+indent_style = space
+indent_size = 2
+
+[*.uproject]
+indent_style = tab
+indent_size = 2
