@@ -641,7 +641,6 @@ FReply SSplineEditWidget::OnMouseMove( const FGeometry& InMyGeometry, const FPoi
 				{
 					// For Undo
 					FText SessionName = LOCTEXT("SplineEditWidgetMoveSplinePoint", "Move Spline Point");
-					FSlateApplication::Get().OnLogSlateEvent(EEventLog::BeginTransaction, SessionName);
 					GEditor->BeginTransaction(TEXT(""), SessionName, Cast<UObject>(SplineActor));
 					SplineActor->SplineComponent->Modify();
 					if (AActor* Owner = SplineActor->SplineComponent->GetOwner())
@@ -947,7 +946,6 @@ FReply SSplineEditWidget::OnMouseButtonUp( const FGeometry& InMyGeometry, const 
 
 		if (GEditor && GEditor->Trans && !GEditor->bIsSimulatingInEditor && GEditor->Trans->IsActive())
 		{
-			FSlateApplication::Get().OnLogSlateEvent(EEventLog::EndTransaction);
 			GEditor->EndTransaction();
 		}
 	}
