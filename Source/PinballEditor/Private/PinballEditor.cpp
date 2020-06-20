@@ -1,7 +1,7 @@
 // Copyright 1998-2014 Epic Games, Inc. All Rights Reserved.
 
 #include "PinballEditor.h"
-#include "../PropertyEditor/Public/PropertyEditorModule.h"
+#include "PropertyEditorModule.h"
 #include "WallActor.h"
 #include "SplineActorDetailsCustomization.h"
  

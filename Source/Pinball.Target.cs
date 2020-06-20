@@ -9,6 +9,7 @@ public class PinballTarget : TargetRules
 		: base(Target)
 	{
 		Type = TargetType.Game;
+		DefaultBuildSettings = BuildSettingsVersion.V2;
 		ExtraModuleNames.Add("Pinball");
 	}
 }
