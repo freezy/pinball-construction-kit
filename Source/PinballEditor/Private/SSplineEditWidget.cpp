@@ -691,7 +691,7 @@ FReply SSplineEditWidget::OnMouseMove( const FGeometry& InMyGeometry, const FPoi
 						CurrentSplinePoint->Position += InMouseEvent.GetCursorDelta();
 
 						UClass* ActorClass = ASplineActor::StaticClass();
-						UProperty* Property = FindField<UProperty>(ActorClass, "SplineComponent");
+						FProperty* Property = FindFProperty<FProperty>(ActorClass, "SplineComponent");
 						FVector SplinePointPos = SplineActor->SplineComponent->GetLocationAtSplinePoint(SelectedSplinePointIndex, ESplineCoordinateSpace::Local);
 
 						// Position stored in the spline point is post offset and zoom, so undo these before storing the value in the spline point
@@ -893,7 +893,7 @@ FReply SSplineEditWidget::OnMouseButtonUp( const FGeometry& InMyGeometry, const 
 				SplinePointUnderMouse = DroppedPoint;
 
 				UClass* ActorClass = ASplineActor::StaticClass();
-				UProperty* SplineInfoProperty = FindField<UProperty>(USplineComponent::StaticClass(), GET_MEMBER_NAME_CHECKED(USplineComponent, SplineCurves));
+				FProperty* SplineInfoProperty = FindFProperty<FProperty>(USplineComponent::StaticClass(), "SplineComponent");
 				SplineActor->SplineComponent->bSplineHasBeenEdited = true;
 
 				// Notify that the spline has been modified
