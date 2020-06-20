@@ -9,7 +9,7 @@ public class PinballEditorTarget : TargetRules
 		: base(Target)
 	{
 		Type = TargetType.Editor;
-
+		DefaultBuildSettings = BuildSettingsVersion.V2;
 		ExtraModuleNames.Add("Pinball");
 		ExtraModuleNames.Add("PinballEditor");
 	}

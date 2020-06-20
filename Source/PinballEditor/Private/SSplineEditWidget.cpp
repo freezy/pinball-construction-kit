@@ -5,7 +5,7 @@
 #include "Components/SplineComponent.h"
 #include "MessageLog.h"
 #include "ScopedTransaction.h"
-#include "EditorStyleSettings.h"
+#include "Classes/EditorStyleSettings.h"
 
 
 #define LOCTEXT_NAMESPACE "SSplineEditWidget"

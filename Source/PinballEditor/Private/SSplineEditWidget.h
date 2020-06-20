@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "SCompoundWidget.h"
+#include "Widgets/SCompoundWidget.h"
 
 struct FSlateBrush;
 class ASplineActor;
