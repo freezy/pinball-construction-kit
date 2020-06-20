@@ -23,7 +23,7 @@ ASplineActor::ASplineActor(const FObjectInitializer& ObjectInitializer)
 	SplineComponent->SetClosedLoop(true);
 	SplineComponent->bSplineHasBeenEdited = true;
 
-	SceneComponent->SetMobility(EComponentMobility::Static);
+	SceneComponent->SetMobility(EComponentMobility::Movable);
 	SplineComponent->SetMobility(EComponentMobility::Movable);
 
 	PrimaryActorTick.bCanEverTick = false;
