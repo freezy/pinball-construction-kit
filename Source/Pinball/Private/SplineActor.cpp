@@ -3,7 +3,6 @@
 #include "SplineActor.h"
 #include "Components/SplineComponent.h"
 #include "Components/SplineMeshComponent.h"
-#include "Engine/CullDistanceVolume.h"
 
 ASplineActor::ASplineActor(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -87,7 +86,7 @@ USplineMeshComponent* ASplineActor::AddPinballSplineMeshComponent(bool bManualAt
 			if (!IsRunningUserConstructionScript() && World && bIsSceneComponent)
 			{
 				UPrimitiveComponent* NewPrimitiveComponent = Cast<UPrimitiveComponent>(NewActorComp);
-				if (NewPrimitiveComponent /*&& ACullDistanceVolume::CanBeAffectedByVolumes(NewPrimitiveComponent)*/)
+				if (NewPrimitiveComponent)
 				{
 					World->UpdateCullDistanceVolumes(this, NewPrimitiveComponent);
 				}

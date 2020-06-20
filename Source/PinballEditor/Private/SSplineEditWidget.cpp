@@ -3,7 +3,6 @@
 #include "SSplineEditWidget.h"
 #include "SplineActor.h"
 #include "Components/SplineComponent.h"
-#include "MessageLog.h"
 #include "ScopedTransaction.h"
 #include "Classes/EditorStyleSettings.h"
 
