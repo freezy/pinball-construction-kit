@@ -4,6 +4,8 @@ A pinball simulator based on Unreal Engine 4.
 
 ![Banner](https://github.com/freezy/ue4-pinball-construction-kit/raw/master/Documents/pinball_small.png)
 
+> ***DISCLAIMER**: This repo is currently unmaintained and dates from 2015. If you're interested in an open source pinball simulator with latest-gen tech and great editor support, check out [freezy/VisualPinball.Engine](https://github.com/freezy/VisualPinball.Engine).*
+
 
 ## What's this?
 
